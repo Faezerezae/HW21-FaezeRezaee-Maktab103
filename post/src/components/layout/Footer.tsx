@@ -6,7 +6,7 @@ import { JSX } from "react/jsx-runtime"
 const navigation = {
     main: [
       { name: 'Home', to: '/' },
-      { name: 'Post', to: '/post' },
+      { name: 'Posts', to: '/posts' },
     
     ],
     social: [
