@@ -5,7 +5,8 @@ import {
 import Layout from "./pages/Layout";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
-import Post from "./pages/Post";
+import PostsList from "./pages/PostsList";
+import PostInfo from "./pages/PostInfo";
 
 export const routes = createBrowserRouter([
   {
@@ -17,14 +18,20 @@ export const routes = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "/post",
-        element: <Post />,
-        // children: [{
-        //   path: "/:postId",
-        //   element: <Link to="/:postId">Posts</Link>,
-
-        // },],
+        path: "/posts",
+        element: <PostsList />,
       },
+      {
+        path: "/posts/:postId",
+        element: <PostInfo />,
+        children: [
+          {
+            path: "comments",
+            element: <div>rfvhgbjk</div>
+          },
+        ]
+      },
+     
       {
         path: "*",
         element: <NotFound />
