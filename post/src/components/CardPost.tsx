@@ -6,11 +6,12 @@ import { useQuery } from 'react-query';
 import { fetchUserById } from '../apis/user-api';
 import { IPost } from '../utils/types';
 
-
-export const CardPost = ({ id, title, body, tags, reactions, userId, disableShowMore = false }: IPost) => {
-    const { data } = useQuery(['user', userId], () => fetchUserById(userId));
+type props = { post: IPost; disableShowMore?: boolean };
+export const CardPost: React.FC<props> = ({ post, disableShowMore = true }) => {
+    const { data } = useQuery(['user', post.userId], () => fetchUserById(post.userId));
+    console.log(data)
     return (
-        <div className="p-4 bg-white rounded shadow md:p-6 dark:border-gray-700">
+        <div className="p-4 px-4 py-5 sm:px-6">
             <div className="flex space-x-3">
                 <div className="flex-shrink-0">
                     <img
@@ -24,7 +25,7 @@ export const CardPost = ({ id, title, body, tags, reactions, userId, disableShow
                         {data?.firstName} {data?.lastName}
                     </p>
                     <p className="text-sm text-gray-500 hover:underline w-48 truncate">
-                        {title}
+                        {post.title}
                     </p>
                 </div>
                 <div className="flex-shrink-0 self-center flex">
@@ -59,7 +60,7 @@ export const CardPost = ({ id, title, body, tags, reactions, userId, disableShow
                         >
                             <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                                 <div className="py-1">
-                                    {tags.map((tag, index) => (
+                                    {post.tags.map((tag, index) => (
                                         <Menu.Item key={index}>
                                             {({ active }) => (
                                                 <p
@@ -81,7 +82,7 @@ export const CardPost = ({ id, title, body, tags, reactions, userId, disableShow
                     </Menu>
                 </div>
             </div>
-            <p className="text-sm text-gray-500 my-4 truncate w-80">{body}</p>
+            <p className="text-sm text-gray-500 my-4 truncate w-80">{post.body}</p>
             <div className="inline-flex items-center gap-x-1">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -98,10 +99,10 @@ export const CardPost = ({ id, title, body, tags, reactions, userId, disableShow
                     />
                 </svg>
                 <span className="text-sm text-gray-500 font-semibold">
-                    {reactions}
+                    {post.reactions}
                 </span>
-                {!disableShowMore && (
-                    <Link to={`/posts/${id}`}>
+                {disableShowMore && (
+                    <Link to={`/posts/${post.id}`}>
                         <span className="text-sm ml-4 text-gray-500 hover:underline hover:cursor-pointer">
                             Show more ...
                         </span>
