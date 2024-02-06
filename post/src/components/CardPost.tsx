@@ -7,7 +7,7 @@ import { fetchUserById } from '../apis/user-api';
 import { IPost } from '../utils/types';
 
 type props = { post: IPost; disableShowMore?: boolean };
-export const CardPost: React.FC<props> = ({ post, disableShowMore = true }) => {
+export const CardPost: React.FC<props> = ({ post, disableShowMore = false }) => {
     const { data } = useQuery(['user', post.userId], () => fetchUserById(post.userId));
     console.log(data)
     return (
@@ -60,7 +60,7 @@ export const CardPost: React.FC<props> = ({ post, disableShowMore = true }) => {
                         >
                             <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                                 <div className="py-1">
-                                    {post.tags.map((tag, index) => (
+                                    {post.tags?.map((tag, index) => (
                                         <Menu.Item key={index}>
                                             {({ active }) => (
                                                 <p
@@ -101,7 +101,7 @@ export const CardPost: React.FC<props> = ({ post, disableShowMore = true }) => {
                 <span className="text-sm text-gray-500 font-semibold">
                     {post.reactions}
                 </span>
-                {disableShowMore && (
+                {!disableShowMore && (
                     <Link to={`/posts/${post.id}`}>
                         <span className="text-sm ml-4 text-gray-500 hover:underline hover:cursor-pointer">
                             Show more ...

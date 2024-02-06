@@ -7,6 +7,7 @@ import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import PostsList from "./pages/PostsList";
 import PostInfo from "./pages/PostInfo";
+import PostComments from "./components/PostComments";
 
 export const routes = createBrowserRouter([
   {
@@ -27,7 +28,7 @@ export const routes = createBrowserRouter([
         children: [
           {
             path: "comments",
-            element: <div>rfvhgbjk</div>
+            element: <PostComments/>
           },
         ]
       },

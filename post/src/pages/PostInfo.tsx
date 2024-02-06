@@ -18,7 +18,7 @@ export default function PostInfo() {
       ):
         <div className="mx-auto px-2 max-w-lg my-8">
         <div className="bg-white pb-8 rounded shadow">
-        <CardPost post={data} disableShowMore={false} />
+        <CardPost post={data} disableShowMore={true} />
         {!window.location.pathname.includes("comments") && (
           <Link to={`/posts/${postId}/comments`}>
             <span className="text-sm ml-4 text-gray-500 hover:underline hover:cursor-pointer">
