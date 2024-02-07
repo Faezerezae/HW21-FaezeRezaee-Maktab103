@@ -1,14 +1,20 @@
-
-
 import { useQuery } from "react-query";
-import { Link, Outlet, useParams } from "react-router-dom";
-import { fetchPostInfo } from "../apis/post-api";
+import { useLoaderData, useParams } from "react-router-dom";
+import { fetchPostComments, fetchPostInfo } from "../apis/post-api";
 import { CardPost } from "../components/CardPost";
 import { PostSkeleton } from "../components/PostSkeleton";
+import { Comment } from "../components/Comments";
 
 export default function PostInfo() {
     const { postId } = useParams();
     const { data,isLoading } = useQuery("PostInfo",() => fetchPostInfo(Number(postId)) );
+    const loaderData = useLoaderData();
+    const {data:postComent,refetch}=useQuery({
+      queryKey:["postComent",postId],
+      queryFn:()=>fetchPostComments(Number(postId)),
+      enabled:false
+    })
+    console.log(postComent)
     return (
         <>
          {isLoading ? (
@@ -18,15 +24,22 @@ export default function PostInfo() {
       ):
         <div className="mx-auto px-2 max-w-lg my-8">
         <div className="bg-white pb-8 rounded shadow">
-        <CardPost post={data} disableShowMore={true} />
-        {!window.location.pathname.includes("comments") && (
-          <Link to={`/posts/${postId}/comments`}>
-            <span className="text-sm ml-4 text-gray-500 hover:underline hover:cursor-pointer">
+        <CardPost post={loaderData || data} disableShowMore={true} />
+  
+          
+            <button className="text-sm ml-4 text-gray-500 hover:underline hover:cursor-pointer"
+            onClick={()=>refetch()}
+            >
               Show comments ...
-            </span>
-          </Link>
-        )}
-        <Outlet/>
+            </button>
+
+            <div className="border-t">
+            {postComent?.comments?.map((el:any) =>(
+              <Comment key={el.id} {...el}/>
+            ))}
+          </div>
+       
+        
      </div>
     </div>
     }

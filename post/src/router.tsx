@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import PostsList from "./pages/PostsList";
 import PostInfo from "./pages/PostInfo";
 import PostComments from "./components/PostComments";
+import { ErrorBoundary } from "./pages/errorBoundry";
 
 export const routes = createBrowserRouter([
   {
@@ -15,7 +16,7 @@ export const routes = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "/",
+        index:true,
         element: <Home />
       },
       {
@@ -25,6 +26,8 @@ export const routes = createBrowserRouter([
       {
         path: "/posts/:postId",
         element: <PostInfo />,
+        errorElement:<ErrorBoundary />,
+        // loader:PostLoader,
         children: [
           {
             path: "comments",

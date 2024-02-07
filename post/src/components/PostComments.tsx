@@ -7,7 +7,7 @@ import { Comment } from './Comments';
 
 export default function PostComments() {
     const { postId } = useParams();
-    const { data,isLoading ,isSuccess} = useQuery("PostInfo",() => fetchPostComments(Number(postId)) );
+    const { data,isLoading ,isSuccess} = useQuery("PostComment",() => fetchPostComments(Number(postId)) );
     console.log(data,isLoading)
     console.log(data.comments)
 

@@ -1,3 +1,7 @@
+export interface IServerError {
+  message: string;
+}
+
 export interface IShortUser {
     id: number;
     username: string;
@@ -9,6 +13,7 @@ export interface IUser {
   lastName?: string;
   image?: string;
   username?:string;
+  email?:string;
 }
 
 export interface IPost {
